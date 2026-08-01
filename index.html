@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>generate-changelog — One bash script, full Changelog.md from git history</title>
+<style>
+  :root { --bg:#0d1117; --fg:#e6edf3; --muted:#8b949e; --accent:#7ee787; --border:#30363d; --card:#161b22; }
+  * { box-sizing: border-box; }
+  body { margin:0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif; background:var(--bg); color:var(--fg); line-height:1.6; }
+  .container { max-width:920px; margin:0 auto; padding:48px 24px; }
+  header { text-align:center; padding:64px 24px 48px; border-bottom:1px solid var(--border); }
+  .badge { display:inline-block; padding:4px 12px; background:var(--card); border:1px solid var(--border); border-radius:20px; color:var(--accent); font-size:13px; margin-bottom:16px; }
+  h1 { font-size:48px; margin:16px 0; line-height:1.2; letter-spacing:-1px; }
+  h1 .accent { color:var(--accent); }
+  .tagline { font-size:20px; color:var(--muted); max-width:680px; margin:0 auto; }
+  .cta { display:inline-block; margin-top:32px; padding:16px 32px; background:var(--accent); color:#0d1117; text-decoration:none; border-radius:8px; font-weight:600; font-size:18px; }
+  .cta:hover { background:#5cd975; }
+  section { padding:48px 0; border-bottom:1px solid var(--border); }
+  h2 { font-size:32px; margin-top:0; }
+  .features { display:grid; grid-template-columns:repeat(auto-fit, minmax(260px, 1fr)); gap:20px; margin-top:32px; }
+  .feature { background:var(--card); border:1px solid var(--border); border-radius:8px; padding:24px; }
+  .feature h3 { color:var(--accent); margin:0 0 8px; font-size:18px; }
+  pre { background:#010409; border:1px solid var(--border); border-radius:6px; padding:16px; overflow-x:auto; font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace; font-size:13px; line-height:1.5; }
+  code { font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace; background:#010409; padding:2px 6px; border-radius:4px; font-size:0.9em; }
+  pre code { background:transparent; padding:0; }
+  .price { display:flex; justify-content:center; align-items:baseline; gap:8px; margin:32px 0; }
+  .price .amount { font-size:72px; font-weight:700; color:var(--accent); }
+  .price .currency { font-size:24px; color:var(--muted); }
+  .includes { max-width:640px; margin:32px auto; }
+  .includes li { margin:8px 0; }
+  footer { text-align:center; padding:48px 24px; color:var(--muted); font-size:14px; }
+  footer a { color:var(--accent); text-decoration:none; }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="container">
+    <span class="badge">MIT License · Zero dependencies · 7.9 KB</span>
+    <h1><span class="accent">generate-changelog</span></h1>
+    <p class="tagline">A self-contained bash script that turns your git history into a beautiful, Keep-a-Changelog-formatted <code>CHANGELOG.md</code> — automatically.</p>
+    <a href="#pricing" class="cta">Get it now — $9</a>
+  </div>
+</header>
+
+<section>
+  <div class="container">
+    <h2>What it does</h2>
+    <p>You commit code. You make tags. <strong>generate-changelog</strong> reads your <code>git log</code>, categorizes every commit into Added / Fixed / Changed / Removed, and writes a <code>CHANGELOG.md</code> your users will actually read.</p>
+    <pre><code>$ bash changelog.sh
+changelog.sh: wrote CHANGELOG.md (version 1.2.4, 17 commits)
+  Added:    8
+  Fixed:    4
+  Changed:  5
+  Removed:  0
+  Breaking: 1</code></pre>
+  </div>
+</section>
+
+<section>
+  <div class="container">
+    <h2>Why you'll love it</h2>
+    <div class="features">
+      <div class="feature">
+        <h3>Zero dependencies</h3>
+        <p>Just <code>bash</code>, <code>git</code>, and <code>awk</code>. No npm, no Python, no Node. Works on macOS, Linux, and Git Bash on Windows.</p>
+      </div>
+      <div class="feature">
+        <h3>Conventional commit aware</h3>
+        <p>Recognizes <code>feat</code>, <code>fix</code>, <code>refactor</code>, <code>perf</code>, <code>docs</code>, and more. Heuristic fallback handles non-conventional repos.</p>
+      </div>
+      <div class="feature">
+        <h3>BREAKING CHANGE detection</h3>
+        <p>Commits with <code>!</code> or <code>BREAKING CHANGE</code> get a dedicated warning section. Your users see the impact before upgrading.</p>
+      </div>
+      <div class="feature">
+        <h3>Smart version inference</h3>
+        <p>Reads your last git tag (<code>v1.2.3</code>) and auto-bumps to <code>1.2.4</code>. Override with <code>--version 2.0.0</code> when you need to.</p>
+      </div>
+      <div class="feature">
+        <h3>Idempotent</h3>
+        <p>Run it twice for the same version — the script refuses to duplicate the section. Run it in CI without fear.</p>
+      </div>
+      <div class="feature">
+        <h3>Safety first</h3>
+        <p>Refuses to run on a dirty working tree (so it can't mix uncommitted work with your changelog). Bypass with <code>--allow-dirty</code>.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="container">
+    <h2>Real output</h2>
+    <p>Tested against a 10-commit synthetic repo with mixed conventional and non-conventional commits. The full test suite (7 scenarios) is in <code>SAMPLE_OUTPUT.md</code>.</p>
+    <pre><code># Changelog
+
+All notable changes to this project will be documented in this file.
+
+The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
+and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
+
+## [1.2.4] - 2026-08-01
+
+### ⚠️ BREAKING CHANGES
+- feat(api)!: rename /v1/users to /v2/users (a7ecb8e)
+
+### Added
+- feat(api)!: rename /v1/users to /v2/users (a7ecb8e)
+- feat(auth): add password reset flow (f61790c)
+- added dark mode support (4eb95c9)
+
+### Fixed
+- fix: handle null pointer in login (7b1f900)
+
+### Changed
+- refactor: extract auth middleware (878063c)
+- perf: cache user lookups (4080117)
+
+### Removed
+- removed deprecated v1 endpoints (88bc0dd)</code></pre>
+  </div>
+</section>
+
+<section id="pricing">
+  <div class="container" style="text-align:center;">
+    <h2>One simple price</h2>
+    <div class="price">
+      <span class="amount">$9</span>
+      <span class="currency">USD</span>
+    </div>
+    <p style="color:var(--muted);">Pay once. Use forever. MIT-licensed. Updates included.</p>
+
+    <ul class="includes" style="text-align:left;">
+      <li>✅ <code>changelog.sh</code> — the full script (7.9 KB, well-commented)</li>
+      <li>✅ <code>SKILL.md</code> — Claude Code skill definition (use as <code>/generate-changelog</code> slash command)</li>
+      <li>✅ <code>README.md</code> — 3-step setup with usage examples</li>
+      <li>✅ <code>SAMPLE_OUTPUT.md</code> — 7 real test runs with verified output</li>
+      <li>✅ Free updates for life (I'll email you when a new version ships)</li>
+      <li>✅ 30-day money-back guarantee, no questions asked</li>
+    </ul>
+
+    <a href="https://triggerxz.gumroad.com/l/generate-changelog" class="cta">Buy on Gumroad — $9</a>
+  </div>
+</section>
+
+<section>
+  <div class="container">
+    <h2>Setup in 3 steps</h2>
+    <ol>
+      <li>Download and unzip the package.</li>
+      <li>Copy <code>changelog.sh</code> into your repo (e.g. <code>./scripts/changelog.sh</code>).</li>
+      <li>Run <code>bash scripts/changelog.sh</code> from your repo root. <code>CHANGELOG.md</code> is created automatically.</li>
+    </ol>
+    <p>Want to use it as a Claude Code skill? Drop <code>SKILL.md</code> into <code>~/.claude/skills/generate-changelog/</code> and call <code>/generate-changelog</code> from any project.</p>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <p>Built by TriggerXZ · MIT License · <a href="https://github.com/TriggerXZ/generate-changelog">View source on GitHub</a></p>
+    <p>Questions? kaminatrigger at gmail dot com</p>
+  </div>
+</footer>
+
+</body>
+</html>
