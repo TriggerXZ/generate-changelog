@@ -2,8 +2,10 @@
 
 > **One bash script. Full `CHANGELOG.md`. Zero dependencies.**
 
-A self-contained bash script that turns your git history into a beautiful,
-[Keep a Changelog](https://keepachangelog.com/en/1.1.0/)–formatted `CHANGELOG.md` — automatically.
+> **A self-contained bash script that turns your git history into a beautiful,
+[Keep a Changelog](https://keepachangelog.com/en/1.1.0/)–formatted `CHANGELOG.md` — automatically.**
+
+> ☕ **If this saved you time, [buy me a coffee](https://ko-fi.com/trigger68510) or [sponsor me on GitHub](https://github.com/sponsors/TriggerXZ)!** Every contribution helps me keep building free tools.
 
 - ✅ **Zero deps** — just `bash`, `git`, and `awk`. No npm, no Python, no jq.
 - ✅ **Conventional commit aware** with heuristic fallback for non-conventional repos
@@ -159,6 +161,8 @@ MIT — see [`LICENSE`](./LICENSE).
 ## Author
 
 Dante ([@TriggerXZ](https://github.com/TriggerXZ)) — built with the help of an AI agent.
+
+☕ **Support this project**: [buymeacoffee.com/trigger68510](https://ko-fi.com/trigger68510) | [GitHub Sponsors](https://github.com/sponsors/TriggerXZ)
 
 ## Related
 
